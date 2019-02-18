@@ -15,8 +15,8 @@ ticker_data = quandl.get_table('WIKI/PRICES', ticker = tickers,
 
 # clean and organize data
 # columns of tickers and their corresponding adjusted prices
-clean_on = data.set_index('date')
-table_clean = clean.pivot(columns='ticker')
+clean_on = ticker_data.set_index('date')
+table_clean = clean_on.pivot(columns='ticker')
 
 # calculate daily and annual returns of the stocks
 returns_daily = table_clean.pct_change()
@@ -57,14 +57,14 @@ portfolio = {'Returns': port_returns,
              'Sharpe Ratio': sharpe_ratio}
 
 # extend original dictionary to accomodate each ticker and weight in the portfolio
-for counter,symbol in enumerate(selected):
+for counter,symbol in enumerate(tickers):
     portfolio[symbol+' Weight'] = [Weight[counter] for Weight in stock_weights]
 
 # make a nice dataframe of the extended dictionary
 df = pd.DataFrame(portfolio)
 
 # get better labels for desired arrangement of columns
-column_order = ['Returns', 'Volatility', 'Sharpe Ratio'] + [stock+' Weight' for stock in selected]
+column_order = ['Returns', 'Volatility', 'Sharpe Ratio'] + [stock+' Weight' for stock in tickers]
 
 # reorder dataframe columns
 df = df[column_order]
@@ -99,7 +99,7 @@ min_vol_weights = np.array(np.transpose(Min_Vol_Portfolio[3:]))
 #run the values of the portfolios over time
 Portolfio_Weights_End = pd.DataFrame(index = ["Min_Vol", 'Max_Sharpe'], columns = column_order[3:],
                             data = [min_vol_weights, Sharpe_Weights])
-results = pd.DataFrame(np.dot(table, Portolfio_Weights_End.T), columns=Portolfio_Weights_End.index, index = table.index)
+results = pd.DataFrame(np.dot(table_clean, Portolfio_Weights_End.T), columns=Portolfio_Weights_End.index, index = table_clean.index)
 
 #plot the graph over time
 plt.style.use('seaborn-dark')
