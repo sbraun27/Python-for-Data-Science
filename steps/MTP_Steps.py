@@ -8,7 +8,7 @@ import scipy as spy
 
 from behave import given, when, then
 ################################################################################
-quandl.ApiConfig.api_key = 'UGDpziis6to3d_qiCcAz'
+quandl.ApiConfig.api_key = 'API key here'
 num_securities = -1
 num_iterations = -1
 tickers = []
