@@ -25,7 +25,7 @@ def step_impl(context, iterations):
     num_iterations = iterations
 
 
-@then(u'I calculate and plot the other thing')
+@then(u'I calculate and plot the growth over time')
 def step_impl(context):
 	ticker_data = quandl.get_table('WIKI/PRICES', ticker = tickers,
                         qopts = { 'columns': ['date', 'ticker', 'adj_close'] },

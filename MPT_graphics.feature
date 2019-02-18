@@ -13,4 +13,4 @@ Feature: Find lowest volatility and highest sharp ratio for a given set of ticke
 	  |CAT|
 	  |WMT|
 	Then calculate and plot the Efficient frontier over 100000 iterations
-	And I calculate and plot the other thing
+	I calculate and plot the growth over time
