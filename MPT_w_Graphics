@@ -86,15 +86,22 @@ plt.xlabel('Volatility (Std. Deviation)')
 plt.ylabel('Historic Annualized Return')
 plt.title('Efficient Frontier')
 plt.show()
+#find the row of max sharpe
 Sharpe_location = df['Sharpe Ratio'].idxmax()
+#find the row of min vol
 min_vol_location = df['Volatility'].idxmax() 
+#create an array of the weights of each portfolio
 Sharpe_Portfolio = df.iloc[Sharpe_location] 
 Sharpe_Weights = np.array(np.transpose(Sharpe_Portfolio[3:]))
 Min_Vol_Portfolio = df.iloc[min_vol_location]
 min_vol_weights = np.array(np.transpose(Min_Vol_Portfolio[3:]))
 
+#run the values of the portfolios over time
 Portolfio_Weights_End = pd.DataFrame(index = ["Min_Vol", 'Max_Sharpe'], columns = column_order[3:],
                             data = [min_vol_weights, Sharpe_Weights])
 results = pd.DataFrame(np.dot(table, Portolfio_Weights_End.T), columns=Portolfio_Weights_End.index, index = table.index)
+
+#plot the graph over time
 plt.style.use('seaborn-dark')
 results.plot.line()
+plt.show()
